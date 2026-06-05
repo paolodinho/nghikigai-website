@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+
+# Crawl HTML tạm (lớn, không cần trong repo)
+_export/raw/
+
+# WordPress / Local (không commit)
+wp-config.php
+*.log
+
+# Misc
+.idea/
+.vscode/
+node_modules/

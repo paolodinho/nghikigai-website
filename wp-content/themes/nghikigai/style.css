@@ -1,0 +1,12 @@
+/*
+Theme Name: Nghikigai
+Theme URI: https://nghikigai.com
+Description: Child theme của Kadence cho Nghikigai — store hương thơm. Thiết kế để khách tự chỉnh nội dung qua WordPress editor, không cần đụng code.
+Author: Digito Combat
+Author URI: https://nghikigai.com
+Template: kadence
+Version: 1.0.0
+Text Domain: nghikigai
+*/
+
+/* Style chi tiết nằm ở assets/css/theme.css (enqueue trong functions.php) */
