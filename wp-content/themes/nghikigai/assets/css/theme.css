@@ -22,12 +22,18 @@
 .ngki-hero p { font-size: 1.08rem; max-width: 640px; margin-left: auto; margin-right: auto; }
 .ngki-hero.wp-block-cover .wp-block-cover__inner-container { max-width: 760px; }
 
-/* Hero cover: overlay đậm hơn + đổ bóng chữ → chữ nổi, dễ đọc trên ảnh */
-.wp-block-cover.is-dark .wp-block-cover__background,
-.wp-block-cover.ngki-hero .wp-block-cover__background { opacity: .72 !important; }
+/* Hero cover: overlay đậm + đổ bóng chữ → chữ nổi, dễ đọc trên ảnh */
+.wp-block-cover.is-dark .wp-block-cover__background { opacity: .72 !important; }
 .wp-block-cover__inner-container h1,
 .wp-block-cover__inner-container h2,
 .wp-block-cover__inner-container p { text-shadow: 0 2px 16px rgba(0,0,0,.5); }
+
+/* Hero TRANG CHỦ: mờ mạnh + làm nhoè ảnh nền (ảnh có chữ → thành nền mềm, hết phân tâm) */
+.wp-block-cover.ngki-hero.is-dark .wp-block-cover__background { opacity: .84 !important; }
+.wp-block-cover.ngki-hero .wp-block-cover__image-background {
+  filter: blur(6px) saturate(1.05);
+  transform: scale(1.1);
+}
 
 /* Value card "Vì sao chọn": số xanh tròn + card sạch */
 .ngki-value-card { border: 1px solid #e6ece7; box-shadow: 0 4px 16px rgba(64,98,71,.06); height: 100%; }

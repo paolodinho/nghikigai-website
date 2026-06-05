@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGHIKIGAI_VERSION', '1.3.1' );
+define( 'NGHIKIGAI_VERSION', '1.4.1' );
 
 /**
  * Enqueue parent + child styles.
@@ -64,6 +64,11 @@ add_filter( 'woocommerce_is_purchasable', function ( $purchasable, $product ) {
 	// Cho phép thêm vào giỏ kể cả khi giá 0 (đơn theo yêu cầu) - giữ nút bấm hoạt động.
 	return $purchasable;
 }, 10, 2 );
+
+/**
+ * Rule Hiếu: KHÔNG để WordPress tự đổi " - " thành en/em dash (wptexturize).
+ */
+add_filter( 'run_wptexturize', '__return_false' );
 
 /**
  * Tối ưu nhẹ: bỏ emoji script (không cần), giảm tải trang.
