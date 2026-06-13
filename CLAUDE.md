@@ -15,13 +15,17 @@ Website: https://nghikigai.com - store hương thơm (nến, nước hoa, tinh d
 - Logo: `_assets/logo.webp` (gốc cropped-Con-dau-2-png.webp)
 - Font: Nunito (body) + Jost (heading)
 - Màu: primary `#e62a65` (hồng magenta), teal `#199588`, dark `#1e1e1e`, green `#5fbd74`
+<!-- Claude suy luận, Hiếu xác nhận: brand đã ĐỔI khi build → màu chủ đạo `#406247` (xanh logo), heading font **Lora** (Jost lỗi tiếng Việt). Dòng trên là token gốc site cũ. -->
 
 ## Files
-- `PLAN.md` - task & tiến độ
+- `PLAN.md` - task & tiến độ · `LOG.md` - nhật ký session · `DECISIONS.md` - quyết định + lý do
 - `.claude/context/brand-info.md` - brand chi tiết, tokens
 - `.claude/context/site-structure.md` - cấu trúc trang/menu site gốc
-- `_export/` - file export từ live (products CSV, WXR, uploads)
+- `.claude/rules/` - quality-bar (tiêu chí QA), workflow (wp.sh + script dựng site)
+- `.claude/commands/` - `/qa` `/status` `/wrap`
+- `_export/` - file export từ live (products CSV, WXR, uploads) + script dựng
 - `_assets/` - logo, ảnh brand
+- `HUONG-DAN-KHACH.md` - doc bàn giao khách (tự quản trị)
 
 ## Trạng thái (2026-06-05)
 Site Local hoàn chỉnh, chạy đúng. 21 sản phẩm import từ **CSV gốc WooCommerce** (Hiếu export) → danh mục phân cấp (Nến thơm cao cấp ▸ Nến kể chuyện/decor/thông điệp), gallery đầy đủ, mô tả HTML thật, slug + permalink `/san-pham/` khớp live. Trang chủ/About/FAQ/Contact/menu/header-footer xong.
