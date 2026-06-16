@@ -19,9 +19,10 @@ $fb      = get_theme_mod( 'ngki_social_fb',       'https://facebook.com/nghikiga
 $ig      = get_theme_mod( 'ngki_social_ig',       'https://instagram.com/nghikigai' );
 $tt      = get_theme_mod( 'ngki_social_tt',       'https://tiktok.com/@nghikigai' );
 $desc    = get_theme_mod( 'ngki_footer_desc',     'Thương hiệu hương thơm Việt Nam - Mỗi ngọn nến, mỗi chai tinh dầu mang một câu chuyện riêng dành cho bạn. Được làm từ sáp tự nhiên, tinh dầu Mỹ cao cấp.' );
-$address = get_theme_mod( 'ngki_footer_address',  'Hẻm 341 Nguyễn Trãi, P. Nguyễn Cư Trinh, Q.1, TP.HCM' );
-$phone   = get_theme_mod( 'ngki_footer_phone',    '0983 797 186' );
-$hours   = get_theme_mod( 'ngki_footer_hours',    'T2 - T7: 9:00 - 20:00' );
+$address = get_theme_mod( 'ngki_footer_address',  'Hẻm 341 Nguyễn Trãi, P. Nguyễn Cư Trinh, Quận 1, TP.HCM' );
+$phone   = get_theme_mod( 'ngki_footer_phone',    '0382 475 611 - 0938 365 100' );
+$email   = get_theme_mod( 'ngki_footer_email',    'nghikigai@gmail.com' );
+$hours   = get_theme_mod( 'ngki_footer_hours',    '10:00 - 18:00 (T2-CN)' );
 $copy    = get_theme_mod( 'ngki_footer_copy',     'Thiết kế bởi Digito Combat' );
 ?>
 
@@ -78,7 +79,17 @@ $copy    = get_theme_mod( 'ngki_footer_copy',     'Thiết kế bởi Digito Com
         <?php if ( $phone ) : ?>
         <li>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18l3-.01a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.28-1.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:<?php echo preg_replace('/\D/', '', $phone); ?>"><?php echo esc_html( $phone ); ?></a>
+          <?php
+          $phones = array_map( 'trim', preg_split('/[\-·,]+/', $phone) );
+          $links  = array_map( fn($p) => '<a href="tel:' . preg_replace('/\D/','',$p) . '">' . esc_html($p) . '</a>', $phones );
+          echo implode( ' - ', $links );
+          ?>
+        </li>
+        <?php endif; ?>
+        <?php if ( $email ) : ?>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
         </li>
         <?php endif; ?>
         <?php if ( $hours ) : ?>

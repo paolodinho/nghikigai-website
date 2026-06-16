@@ -100,7 +100,7 @@ add_action( 'customize_register', function ( $wp ) {
 	/* ── 1. TOPBAR ── */
 	$wp->add_section( 'ngki_topbar', [ 'title' => 'Thông báo đầu trang', 'panel' => 'ngki_panel', 'priority' => 10 ] );
 	$add( 'ngki_topbar_text',
-		'Miễn phí vận chuyển nội thành TP.HCM - Đơn từ 500K',
+		'Miễn ship nội thành TP.HCM cho đơn trên 500K',
 		'Nội dung thông báo',
 		'ngki_topbar', 'text',
 		'Hiển thị thanh xanh trên cùng. Để trống để ẩn.' );
@@ -157,10 +157,11 @@ add_action( 'customize_register', function ( $wp ) {
 	$wp->add_section( 'ngki_footer', [ 'title' => 'Footer - Thông tin liên hệ', 'panel' => 'ngki_panel', 'priority' => 50 ] );
 	$add( 'ngki_footer_desc',    'Thương hiệu hương thơm Việt Nam - Mỗi ngọn nến, mỗi chai tinh dầu mang một câu chuyện riêng dành cho bạn. Được làm từ sáp tự nhiên, tinh dầu Mỹ cao cấp.',
 		'Mô tả thương hiệu', 'ngki_footer', 'textarea' );
-	$add( 'ngki_footer_address', 'Hẻm 341 Nguyễn Trãi, P. Nguyễn Cư Trinh, Q.1, TP.HCM', 'Địa chỉ', 'ngki_footer' );
-	$add( 'ngki_footer_phone',   '0983 797 186', 'Số điện thoại',   'ngki_footer' );
-	$add( 'ngki_footer_hours',   'T2 - T7: 9:00 - 20:00', 'Giờ mở cửa',  'ngki_footer' );
-	$add( 'ngki_footer_copy',    'Thiết kế bởi Digito Combat', 'Dòng credit',  'ngki_footer' );
+	$add( 'ngki_footer_address', 'Hẻm 341 Nguyễn Trãi, P. Nguyễn Cư Trinh, Quận 1, TP.HCM', 'Địa chỉ', 'ngki_footer' );
+	$add( 'ngki_footer_phone',   '0382 475 611 - 0938 365 100', 'Hotline (dùng "-" giữa 2 số)', 'ngki_footer' );
+	$add( 'ngki_footer_email',   'nghikigai@gmail.com', 'Email',         'ngki_footer', 'email' );
+	$add( 'ngki_footer_hours',   '10:00 - 18:00 (T2-CN)', 'Giờ mở cửa', 'ngki_footer' );
+	$add( 'ngki_footer_copy',    'Thiết kế bởi Digito Combat', 'Dòng credit', 'ngki_footer' );
 
 	/* ── 7. MẠNG XÃ HỘI ── */
 	$wp->add_section( 'ngki_social', [ 'title' => 'Mạng xã hội', 'panel' => 'ngki_panel', 'priority' => 55 ] );
