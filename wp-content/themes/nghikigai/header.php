@@ -81,6 +81,24 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-footer-contact li svg{min-width:16px;margin-top:2px;color:var(--color-primary)}
 .ngki-footer-bottom{max-width:1280px;margin:48px auto 0;padding:20px 32px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12px}
 .ngki-footer-bottom p{opacity:.5}
+/* hamburger + mobile drawer */
+.ngki-hamburger{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-sm);background:none;border:none;cursor:pointer;color:var(--color-dark);padding:0;flex-shrink:0}
+.ngki-hamburger:hover{background:var(--color-primary-tint);color:var(--color-primary)}
+.ngki-hamburger svg{display:block}
+.ngki-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;opacity:0;transition:opacity .25s}
+.ngki-drawer-overlay.open{opacity:1}
+.ngki-drawer{position:fixed;top:0;left:0;bottom:0;width:280px;background:#fff;z-index:201;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column;overflow-y:auto}
+.ngki-drawer.open{transform:translateX(0)}
+.ngki-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--color-border)}
+.ngki-drawer-logo{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--color-primary)}
+.ngki-drawer-close{width:36px;height:36px;border-radius:50%;border:none;background:var(--color-surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-dark)}
+.ngki-drawer-close:hover{background:var(--color-primary-tint);color:var(--color-primary)}
+.ngki-drawer-nav{padding:12px 0;flex:1}
+.ngki-drawer-nav a{display:block;padding:13px 20px;font-size:15px;font-weight:600;color:var(--color-dark);border-left:3px solid transparent;transition:all .15s}
+.ngki-drawer-nav a:hover,.ngki-drawer-nav a.current{color:var(--color-primary);background:var(--color-primary-tint);border-left-color:var(--color-primary)}
+.ngki-drawer-nav .ngki-drawer-divider{height:1px;background:var(--color-border);margin:8px 20px}
+.ngki-drawer-footer{padding:20px;border-top:1px solid var(--color-border)}
+.ngki-drawer-footer a{display:flex;align-items:center;gap:8px;padding:11px 16px;background:var(--color-primary);color:#fff;border-radius:var(--radius-md);font-size:14px;font-weight:700;justify-content:center;white-space:nowrap}
 /* responsive header/footer */
 @media(max-width:1024px){
   .ngki-footer-inner{grid-template-columns:1fr 1fr;gap:32px}
@@ -89,6 +107,8 @@ body.admin-bar .ngki-header{top:32px}
 @media(max-width:768px){
   .ngki-inner,.ngki-header-inner{padding:0 20px}
   .ngki-nav{display:none}
+  .ngki-hamburger{display:flex}
+  .ngki-btn-cart span.cart-label{display:none}
   .ngki-footer-inner{grid-template-columns:1fr;gap:28px}
   .ngki-footer-inner .ngki-footer-col:last-child{display:none}
 }
@@ -132,8 +152,53 @@ body.admin-bar .ngki-header{top:32px}
       </a>
       <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="ngki-btn-add ngki-btn-cart">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        Giỏ hàng<?php $count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; if ( $count ) echo ' (' . $count . ')'; ?>
+        <span class="cart-label">Giỏ hàng<?php $count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; if ( $count ) echo ' (' . $count . ')'; ?></span>
       </a>
+      <button class="ngki-hamburger" id="ngki-hamburger-btn" aria-label="Mở menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- MOBILE DRAWER -->
+<div class="ngki-drawer-overlay" id="ngki-overlay"></div>
+<nav class="ngki-drawer" id="ngki-drawer" aria-label="Menu di động">
+  <div class="ngki-drawer-head">
+    <span class="ngki-drawer-logo"><?php bloginfo('name'); ?></span>
+    <button class="ngki-drawer-close" id="ngki-drawer-close" aria-label="Đóng menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="ngki-drawer-nav">
+    <a href="<?php echo esc_url( home_url('/') ); ?>"<?php is_front_page() ? print ' class="current"' : ''; ?>>Trang chủ</a>
+    <a href="<?php echo esc_url( get_permalink( wc_get_page_id('shop') ) ); ?>"<?php is_shop() ? print ' class="current"' : ''; ?>>Shop</a>
+    <div class="ngki-drawer-divider"></div>
+    <?php foreach ( (array) $cats_nav as $cat ) : ?>
+    <a href="<?php echo esc_url( get_term_link($cat) ); ?>"><?php echo esc_html($cat->name); ?></a>
+    <?php endforeach; ?>
+    <div class="ngki-drawer-divider"></div>
+    <a href="<?php echo esc_url( get_permalink( get_page_by_path('about-us') ) ); ?>">Về chúng tôi</a>
+    <a href="<?php echo esc_url( get_permalink( get_page_by_path('contact-us') ) ); ?>">Liên hệ</a>
+  </div>
+  <div class="ngki-drawer-footer">
+    <a href="<?php echo esc_url( wc_get_cart_url() ); ?>">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      Giỏ hàng<?php $count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; if ( $count ) echo ' (' . $count . ')'; ?>
+    </a>
+  </div>
+</nav>
+<script>
+(function(){
+  var btn=document.getElementById('ngki-hamburger-btn');
+  var overlay=document.getElementById('ngki-overlay');
+  var drawer=document.getElementById('ngki-drawer');
+  var closeBtn=document.getElementById('ngki-drawer-close');
+  function open(){drawer.classList.add('open');overlay.style.display='block';requestAnimationFrame(function(){overlay.classList.add('open');});btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+  function close(){drawer.classList.remove('open');overlay.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';setTimeout(function(){overlay.style.display='none';},260);}
+  if(btn){btn.addEventListener('click',open);}
+  if(closeBtn){closeBtn.addEventListener('click',close);}
+  if(overlay){overlay.addEventListener('click',close);}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
