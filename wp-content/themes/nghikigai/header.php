@@ -105,12 +105,13 @@ body.admin-bar .ngki-header{top:32px}
   .ngki-footer-brand{grid-column:1/-1}
 }
 @media(max-width:768px){
-  .ngki-inner,.ngki-header-inner{padding:0 20px}
+  .ngki-inner,.ngki-header-inner,.ngki-footer-inner,.ngki-footer-bottom{padding-left:20px;padding-right:20px}
+  .ngki-topbar{font-size:11px;padding:6px 16px}
   .ngki-nav{display:none}
   .ngki-hamburger{display:flex}
   .ngki-btn-cart span.cart-label{display:none}
-  .ngki-footer-inner{grid-template-columns:1fr;gap:28px}
-  .ngki-footer-inner .ngki-footer-col:last-child{display:none}
+  .ngki-footer-inner{grid-template-columns:1fr;gap:24px}
+  .ngki-footer-bottom{flex-direction:column;align-items:flex-start;gap:6px;padding-top:16px;padding-bottom:16px}
 }
 </style>
 </head>

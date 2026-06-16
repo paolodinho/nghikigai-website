@@ -112,8 +112,8 @@ get_header();
 @media(max-width:1024px){
   .ngki-hero-inner{grid-template-columns:1fr;height:auto}
   .ngki-hero-content{padding:48px 0 32px}
-  .ngki-hero-images{height:380px}
-  .ngki-hero-img-grid{padding:0;height:380px}
+  .ngki-hero-images{height:360px}
+  .ngki-hero-img-grid{padding:0;height:360px}
   .ngki-cat-grid{grid-template-columns:repeat(3,1fr)}
   .ngki-cat-grid .ngki-cat-card:nth-child(4),.ngki-cat-grid .ngki-cat-card:nth-child(5){display:none}
   .ngki-products-grid{grid-template-columns:repeat(2,1fr)}
@@ -121,13 +121,41 @@ get_header();
   .ngki-why-badge{right:0}
 }
 @media(max-width:768px){
-  .ngki-section{padding:56px 0}
+  /* sections */
+  .ngki-section{padding:48px 0}
+  .ngki-section-header{margin-bottom:32px}
+  .ngki-section-title{font-size:22px}
+  /* hero */
   .ngki-hero-inner{padding:0 20px}
-  .ngki-hero-title{font-size:28px}
-  .ngki-cat-grid{grid-template-columns:repeat(2,1fr)}
+  .ngki-hero-content{padding:36px 0 24px}
+  .ngki-hero-title{font-size:26px}
+  .ngki-hero-desc{font-size:14px;margin-bottom:28px}
+  .ngki-hero-cta{flex-direction:column;align-items:stretch;gap:10px}
+  .ngki-hero-cta .ngki-btn{justify-content:center}
+  .ngki-hero-images{height:260px}
+  .ngki-hero-img-grid{height:260px}
+  /* categories */
+  .ngki-cat-grid{grid-template-columns:repeat(2,1fr);gap:12px}
   .ngki-cat-grid .ngki-cat-card:nth-child(3),.ngki-cat-grid .ngki-cat-card:nth-child(4),.ngki-cat-grid .ngki-cat-card:nth-child(5){display:none}
+  /* products */
   .ngki-products-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .ngki-product-body{padding:12px}
+  .ngki-product-name{font-size:13px}
+  .ngki-product-desc{display:none}
+  .ngki-product-footer{flex-direction:column;gap:8px;align-items:flex-start}
+  .ngki-price{font-size:15px}
+  .ngki-btn-add{width:100%;justify-content:center;padding:8px 12px;font-size:12px}
+  /* why */
+  .ngki-why-image img{height:260px}
+  .ngki-why-badge{bottom:16px;right:12px;padding:14px 18px;min-width:100px}
+  .ngki-why-badge .num{font-size:28px}
+  .ngki-why-list{gap:20px}
+  /* testimonials */
   .ngki-testi-grid{grid-template-columns:1fr}
+  /* cta */
+  .ngki-cta{padding:48px 20px}
+  .ngki-cta-actions{flex-direction:column;align-items:center;gap:10px;margin-top:28px}
+  .ngki-cta-actions .ngki-btn{width:100%;max-width:280px;justify-content:center}
 }
 </style>
 
