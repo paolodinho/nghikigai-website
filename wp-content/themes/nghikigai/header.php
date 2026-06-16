@@ -119,9 +119,9 @@ body.admin-bar .ngki-header{top:32px}
 <?php wp_body_open(); ?>
 
 <!-- TOP BAR -->
-<div class="ngki-topbar">
-  Miễn phí vận chuyển nội thành TP.HCM - Đơn hàng từ 500.000đ
-</div>
+<?php $topbar = get_theme_mod( 'ngki_topbar_text', 'Miễn phí vận chuyển nội thành TP.HCM - Đơn từ 500K' ); if ( $topbar ) : ?>
+<div class="ngki-topbar"><?php echo esc_html( $topbar ); ?></div>
+<?php endif; ?>
 
 <!-- HEADER -->
 <header class="ngki-header">

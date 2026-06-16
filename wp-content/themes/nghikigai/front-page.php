@@ -27,6 +27,59 @@ $cats = get_terms( [
 	'number'     => 5,
 ] );
 
+/* --- Customizer values --- */
+$h_badge   = get_theme_mod( 'ngki_hero_badge',    'Thương hiệu Việt Nam' );
+$h_title1  = get_theme_mod( 'ngki_hero_title_1',  'Hương thơm' );
+$h_title_em= get_theme_mod( 'ngki_hero_title_em', 'kể chuyện' );
+$h_title2  = get_theme_mod( 'ngki_hero_title_2',  'của bạn' );
+$h_desc    = get_theme_mod( 'ngki_hero_desc',      'Mỗi ngọn nến, mỗi chai tinh dầu là một câu chuyện riêng biệt. Nghikigai giúp bạn tìm thấy ý nghĩa trong từng khoảnh khắc bình yên nhất.' );
+$h_cta1    = get_theme_mod( 'ngki_hero_cta1',     'Khám phá ngay' );
+$h_cta2    = get_theme_mod( 'ngki_hero_cta2',     'Về chúng tôi' );
+
+$w_num     = get_theme_mod( 'ngki_why_badge_num',   '21+' );
+$w_lbl     = get_theme_mod( 'ngki_why_badge_label', 'sản phẩm độc quyền' );
+$w_title   = get_theme_mod( 'ngki_why_title',       'Mỗi ngọn nến là một cam kết với bản thân' );
+$w_desc    = get_theme_mod( 'ngki_why_desc',        'Nghikigai không chỉ bán hương thơm. Chúng tôi tạo ra những khoảnh khắc có ý nghĩa.' );
+$why_items = [];
+$why_defaults = [
+	1 => [ '100% sáp tự nhiên, an toàn cho gia đình', 'Sáp cọ, sáp dừa và sáp ong thiên nhiên - cháy sạch, không khói đen, không độc hại. An tâm dùng trong nhà có trẻ nhỏ và thú cưng.' ],
+	2 => [ 'Hương thơm phối trộn độc quyền, không đại trà', 'Tinh dầu Mỹ cao cấp, được phối chế riêng biệt cho từng sản phẩm. Bạn sẽ không tìm thấy mùi hương này ở bất kỳ thương hiệu nào khác.' ],
+	3 => [ 'Câu chuyện riêng trong từng sản phẩm', 'Mỗi ngọn nến mang tên và câu chuyện có ý nghĩa: Bay đi Ikigai, A New Era of Me, Lost in Calm Forest...' ],
+	4 => [ 'Quà tặng tùy chỉnh theo yêu cầu', 'Từ thông điệp bí ẩn trong nến, label riêng, đến hộp quà tặng theo chủ đề - tất cả đều có thể làm theo ý bạn muốn.' ],
+];
+$why_icons = [
+	1 => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+	2 => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>',
+	3 => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+	4 => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>',
+];
+for ( $i = 1; $i <= 4; $i++ ) {
+	$why_items[$i] = [
+		'title' => get_theme_mod( "ngki_why_{$i}_title", $why_defaults[$i][0] ),
+		'desc'  => get_theme_mod( "ngki_why_{$i}_desc",  $why_defaults[$i][1] ),
+		'icon'  => $why_icons[$i],
+	];
+}
+
+$testi_defaults = [
+	1 => [ 'Nguyễn Thùy T.', 'A Cup of Peace - 220g', '"Mình mua nến kể chuyện \'A Cup of Peace\' để ngồi đọc sách buổi tối. Mùi hương thật sự rất diệu - nhẹ nhàng, thanh khiết. Lần sau nhất định mua thêm cho bạn bè."' ],
+	2 => [ 'Trần Minh H.', 'Nước hoa độc bản - Flora', '"Mua nước hoa Flora làm quà sinh nhật cho người yêu, bạn ấy thích lắm. Điều mình thích là có thể khắc tên và viết lời nhắn riêng - rất chu đáo và ý nghĩa."' ],
+	3 => [ 'Lê Phương L.', 'Nến thông điệp bí ẩn', '"Nến thông điệp là món quà độc đáo nhất mình từng tặng. Khi bạn mình đốt lên và đọc được thông điệp bên trong, bạn ấy xúc động lắm."' ],
+];
+$testis = [];
+for ( $i = 1; $i <= 3; $i++ ) {
+	$testis[$i] = [
+		'name'    => get_theme_mod( "ngki_testi_{$i}_name",    $testi_defaults[$i][0] ),
+		'product' => get_theme_mod( "ngki_testi_{$i}_product", $testi_defaults[$i][1] ),
+		'text'    => get_theme_mod( "ngki_testi_{$i}_text",    $testi_defaults[$i][2] ),
+	];
+}
+
+$cta_title = get_theme_mod( 'ngki_cta_title', 'Miễn phí vận chuyển nội thành TP.HCM' );
+$cta_desc  = get_theme_mod( 'ngki_cta_desc',  'Đơn hàng từ 500.000đ - Giao hàng trong ngày - Đóng gói quà tặng miễn phí khi yêu cầu' );
+$cta_btn1  = get_theme_mod( 'ngki_cta_btn1',  'Mua ngay' );
+$cta_btn2  = get_theme_mod( 'ngki_cta_btn2',  'Liên hệ tư vấn' );
+
 get_header();
 ?>
 <style>
@@ -163,21 +216,19 @@ get_header();
 <section class="ngki-hero">
   <div class="ngki-hero-inner">
     <div class="ngki-hero-content">
-      <span class="ngki-hero-badge">Thương hiệu Việt Nam</span>
+      <?php if ( $h_badge ) : ?><span class="ngki-hero-badge"><?php echo esc_html( $h_badge ); ?></span><?php endif; ?>
       <h1 class="ngki-hero-title">
-        Hương thơm<br>
-        <em>kể chuyện</em><br>
-        của bạn
+        <?php echo esc_html( $h_title1 ); ?><br>
+        <em><?php echo esc_html( $h_title_em ); ?></em><br>
+        <?php echo esc_html( $h_title2 ); ?>
       </h1>
-      <p class="ngki-hero-desc">
-        Mỗi ngọn nến, mỗi chai tinh dầu là một câu chuyện riêng biệt. Nghikigai giúp bạn tìm thấy ý nghĩa trong từng khoảnh khắc bình yên nhất.
-      </p>
+      <?php if ( $h_desc ) : ?><p class="ngki-hero-desc"><?php echo esc_html( $h_desc ); ?></p><?php endif; ?>
       <div class="ngki-hero-cta">
         <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="ngki-btn ngki-btn-primary">
-          Khám phá ngay
+          <?php echo esc_html( $h_cta1 ); ?>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'about-us' ) ) ); ?>" class="ngki-btn ngki-btn-outline">Về chúng tôi</a>
+        <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'about-us' ) ) ); ?>" class="ngki-btn ngki-btn-outline"><?php echo esc_html( $h_cta2 ); ?></a>
       </div>
     </div>
     <div class="ngki-hero-images">
@@ -273,45 +324,26 @@ get_header();
       <div class="ngki-why-image">
         <img src="https://nghikigai.com/wp-content/uploads/2025/09/IMG_9650-scaled-jpg.webp" alt="Hương thơm Nghikigai" loading="lazy">
         <div class="ngki-why-badge">
-          <div class="num">21+</div>
-          <div class="lbl">sản phẩm độc quyền</div>
+          <div class="num"><?php echo esc_html( $w_num ); ?></div>
+          <div class="lbl"><?php echo esc_html( $w_lbl ); ?></div>
         </div>
       </div>
       <div class="ngki-why-content">
         <div class="ngki-section-header">
           <span class="ngki-label">Lý do chọn chúng tôi</span>
-          <h2 class="ngki-section-title">Mỗi ngọn nến là một cam kết với bản thân</h2>
-          <p class="ngki-section-desc">Nghikigai không chỉ bán hương thơm. Chúng tôi tạo ra những khoảnh khắc có ý nghĩa.</p>
+          <h2 class="ngki-section-title"><?php echo esc_html( $w_title ); ?></h2>
+          <?php if ( $w_desc ) : ?><p class="ngki-section-desc"><?php echo esc_html( $w_desc ); ?></p><?php endif; ?>
         </div>
         <div class="ngki-why-list">
+          <?php foreach ( $why_items as $item ) : ?>
           <div class="ngki-why-item">
-            <div class="ngki-why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="ngki-why-icon"><?php echo $item['icon']; ?></div>
             <div>
-              <div class="ngki-why-item-title">100% sáp tự nhiên, an toàn cho gia đình</div>
-              <div class="ngki-why-item-desc">Sáp cọ, sáp dừa và sáp ong thiên nhiên - cháy sạch, không khói đen, không độc hại. An tâm dùng trong nhà có trẻ nhỏ và thú cưng.</div>
+              <div class="ngki-why-item-title"><?php echo esc_html( $item['title'] ); ?></div>
+              <div class="ngki-why-item-desc"><?php echo esc_html( $item['desc'] ); ?></div>
             </div>
           </div>
-          <div class="ngki-why-item">
-            <div class="ngki-why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
-            <div>
-              <div class="ngki-why-item-title">Hương thơm phối trộn độc quyền, không đại trà</div>
-              <div class="ngki-why-item-desc">Tinh dầu Mỹ cao cấp, được phối chế riêng biệt cho từng sản phẩm. Bạn sẽ không tìm thấy mùi hương này ở bất kỳ thương hiệu nào khác.</div>
-            </div>
-          </div>
-          <div class="ngki-why-item">
-            <div class="ngki-why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-            <div>
-              <div class="ngki-why-item-title">Câu chuyện riêng trong từng sản phẩm</div>
-              <div class="ngki-why-item-desc">Mỗi ngọn nến mang tên và câu chuyện có ý nghĩa: Bay đi Ikigai, A New Era of Me, Lost in Calm Forest... Để bạn tìm thấy chính mình trong đó.</div>
-            </div>
-          </div>
-          <div class="ngki-why-item">
-            <div class="ngki-why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
-            <div>
-              <div class="ngki-why-item-title">Quà tặng tùy chỉnh theo yêu cầu</div>
-              <div class="ngki-why-item-desc">Từ thông điệp bí ẩn trong nến, label riêng, đến hộp quà tặng theo chủ đề - tất cả đều có thể làm theo ý bạn muốn.</div>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
@@ -326,30 +358,19 @@ get_header();
       <h2 class="ngki-section-title">Cảm nhận từ những người đã trải nghiệm</h2>
     </div>
     <div class="ngki-testi-grid">
+      <?php foreach ( $testis as $t ) : ?>
       <div class="ngki-testi-card">
         <div class="ngki-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="ngki-testi-text">"Mình mua nến kể chuyện 'A Cup of Peace' để ngồi đọc sách buổi tối. Mùi hương thật sự rất diệu - nhẹ nhàng, thanh khiết, giống như đang ngồi trong vườn trà. Lần sau nhất định mua thêm cho bạn bè."</p>
+        <p class="ngki-testi-text"><?php echo esc_html( $t['text'] ); ?></p>
         <div class="ngki-testi-author">
-          <div class="ngki-testi-avatar">T</div>
-          <div><div class="ngki-testi-name">Nguyễn Thùy T.</div><div class="ngki-testi-prod">A Cup of Peace - 220g</div></div>
+          <div class="ngki-testi-avatar"><?php echo esc_html( mb_substr( $t['name'], 0, 1 ) ); ?></div>
+          <div>
+            <div class="ngki-testi-name"><?php echo esc_html( $t['name'] ); ?></div>
+            <div class="ngki-testi-prod"><?php echo esc_html( $t['product'] ); ?></div>
+          </div>
         </div>
       </div>
-      <div class="ngki-testi-card">
-        <div class="ngki-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="ngki-testi-text">"Mua nước hoa Flora làm quà sinh nhật cho người yêu, bạn ấy thích lắm. Mùi hoa tươi, nữ tính nhưng không quá gắt. Điều mình thích là có thể khắc tên và viết lời nhắn riêng - rất chu đáo và ý nghĩa."</p>
-        <div class="ngki-testi-author">
-          <div class="ngki-testi-avatar">M</div>
-          <div><div class="ngki-testi-name">Trần Minh H.</div><div class="ngki-testi-prod">Nước hoa độc bản - Flora</div></div>
-        </div>
-      </div>
-      <div class="ngki-testi-card">
-        <div class="ngki-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="ngki-testi-text">"Nến thông điệp là món quà độc đáo nhất mình từng tặng. Khi bạn mình đốt lên và đọc được thông điệp bên trong, bạn ấy xúc động lắm. Mình đã đặt thêm 5 cái để tặng cho cả nhóm bạn."</p>
-        <div class="ngki-testi-author">
-          <div class="ngki-testi-avatar">L</div>
-          <div><div class="ngki-testi-name">Lê Phương L.</div><div class="ngki-testi-prod">Nến thông điệp bí ẩn</div></div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
@@ -357,11 +378,11 @@ get_header();
 <!-- CTA BANNER -->
 <div class="ngki-cta">
   <span class="ngki-label">Đặt hàng ngay hôm nay</span>
-  <h2 class="ngki-section-title">Miễn phí vận chuyển nội thành TP.HCM</h2>
-  <p class="ngki-section-desc">Đơn hàng từ 500.000đ - Giao hàng trong ngày - Đóng gói quà tặng miễn phí khi yêu cầu</p>
+  <h2 class="ngki-section-title"><?php echo esc_html( $cta_title ); ?></h2>
+  <?php if ( $cta_desc ) : ?><p class="ngki-section-desc"><?php echo esc_html( $cta_desc ); ?></p><?php endif; ?>
   <div class="ngki-cta-actions">
-    <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="ngki-btn ngki-btn-white">Mua ngay</a>
-    <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'contact-us' ) ) ); ?>" class="ngki-btn ngki-btn-outline-white">Liên hệ tư vấn</a>
+    <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="ngki-btn ngki-btn-white"><?php echo esc_html( $cta_btn1 ); ?></a>
+    <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'contact-us' ) ) ); ?>" class="ngki-btn ngki-btn-outline-white"><?php echo esc_html( $cta_btn2 ); ?></a>
   </div>
 </div>
 
