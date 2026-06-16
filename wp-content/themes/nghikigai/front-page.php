@@ -1,19 +1,16 @@
 <?php
 /**
- * Front Page template - Nghikigai custom design
- * Ghi đè Kadence default front-page. Dùng wp_head/wp_footer để WP admin bar + plugins vẫn chạy.
+ * Front Page template - Nghikigai
+ * Dùng get_header() / get_footer() → menu + footer đồng nhất với mọi trang.
  *
  * @package nghikigai
  */
 
-// Logo
-$logo_id  = get_theme_mod( 'custom_logo' );
-$logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
-if ( ! $logo_url ) {
-	$logo_url = get_stylesheet_directory_uri() . '/../../../uploads/2024/01/cropped-Con-dau-2-png.webp';
-}
+add_filter( 'body_class', function( $classes ) {
+	$classes[] = 'ngki-fp';
+	return $classes;
+} );
 
-// Products: lấy 8 sp phổ biến nhất
 $raw_products = wc_get_products( [
 	'limit'   => 8,
 	'status'  => 'publish',
@@ -21,7 +18,6 @@ $raw_products = wc_get_products( [
 	'order'   => 'DESC',
 ] );
 
-// Categories: 5 danh mục chính (loại "Uncategorized")
 $cats = get_terms( [
 	'taxonomy'   => 'product_cat',
 	'hide_empty' => true,
@@ -30,49 +26,11 @@ $cats = get_terms( [
 	'order'      => 'DESC',
 	'number'     => 5,
 ] );
-?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-<meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
-<?php wp_head(); ?>
+
+get_header();
+?>
 <style>
-/* ===== NGHIKIGAI FRONT PAGE STYLES ===== */
-:root{--color-primary:#406247;--color-primary-dark:#2f4a35;--color-primary-tint:#f1f6f2;--color-primary-light:#e8f0ea;--color-dark:#1e1e1e;--color-text:#3a3a3a;--color-muted:#6b7c6e;--color-border:#dde8de;--color-bg:#ffffff;--color-surface:#f8faf8;--font-heading:'Lora',Georgia,serif;--font-body:'Nunito',sans-serif;--radius-sm:4px;--radius-md:8px;--radius-lg:14px;--shadow-low:0 1px 3px rgba(64,98,71,.08);--shadow-mid:0 4px 16px rgba(64,98,71,.11);--shadow-high:0 8px 32px rgba(64,98,71,.14)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body.ngki-fp{font-family:var(--font-body);color:var(--color-text);background:var(--color-bg);line-height:1.6;font-size:15px}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-ul{list-style:none}
-
-/* WP admin bar offset */
-body.admin-bar .ngki-topbar{margin-top:32px}
-@media screen and (max-width:782px){body.admin-bar .ngki-topbar{margin-top:46px}}
-
-/* TOP BAR */
-.ngki-topbar{background:var(--color-primary);color:#fff;text-align:center;padding:9px 20px;font-size:13px;font-weight:600;letter-spacing:.04em}
-
-/* HEADER */
-.ngki-header{background:#fff;border-bottom:1px solid var(--color-border);position:sticky;top:0;z-index:100}
-body.admin-bar .ngki-header{top:32px}
-@media(max-width:782px){body.admin-bar .ngki-header{top:46px}}
-.ngki-header-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;height:70px}
-.ngki-logo img{height:44px;width:auto;object-fit:contain}
-.ngki-logo .logo-text{font-family:var(--font-heading);font-size:22px;font-weight:600;color:var(--color-primary);letter-spacing:-.02em}
-.ngki-nav ul{display:flex;align-items:center;gap:8px}
-.ngki-nav a{font-size:14px;font-weight:600;color:var(--color-dark);padding:8px 12px;border-radius:var(--radius-sm);white-space:nowrap;transition:color .18s,background .18s}
-.ngki-nav a:hover{color:var(--color-primary);background:var(--color-primary-tint)}
-.ngki-header-actions{display:flex;align-items:center;gap:4px}
-.ngki-header-actions a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--color-dark);transition:background .18s,color .18s}
-.ngki-header-actions a:hover{background:var(--color-primary-tint);color:var(--color-primary)}
-.ngki-btn-cart{background:var(--color-primary)!important;color:#fff!important;border-radius:var(--radius-md)!important;width:auto!important;padding:0 16px!important;gap:6px;font-size:13px;font-weight:700;white-space:nowrap}
-.ngki-btn-cart:hover{background:var(--color-primary-dark)!important}
-
-/* HERO */
+/* ===== FRONT PAGE SPECIFIC STYLES ===== */
 .ngki-hero{background:var(--color-primary-tint);overflow:hidden}
 .ngki-hero-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:5fr 7fr;gap:0;height:580px;align-items:center}
 .ngki-hero-content{padding:40px 48px 40px 0}
@@ -85,23 +43,7 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-hero-img-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:100%;padding:24px 0 24px 24px}
 .ngki-hero-img-grid img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md)}
 .ngki-hero-img-grid img:first-child{grid-row:1/3;border-radius:var(--radius-lg)}
-
-/* BUTTONS */
-.ngki-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:var(--radius-md);font-family:var(--font-body);font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer;border:2px solid transparent;transition:all .2s;white-space:nowrap}
-.ngki-btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
-.ngki-btn-primary:hover{background:var(--color-primary-dark);border-color:var(--color-primary-dark);color:#fff}
-.ngki-btn-outline{background:transparent;color:var(--color-primary);border-color:var(--color-primary)}
-.ngki-btn-outline:hover{background:var(--color-primary-tint)}
-
-/* SECTIONS */
-.ngki-section{padding:80px 0}
-.ngki-inner{max-width:1280px;margin:0 auto;padding:0 32px}
-.ngki-section-header{text-align:center;margin-bottom:52px}
-.ngki-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--color-primary);margin-bottom:12px}
-.ngki-section-title{font-family:var(--font-heading);font-size:clamp(24px,3vw,38px);font-weight:600;color:var(--color-dark);line-height:1.2;letter-spacing:-.02em;text-wrap:balance}
-.ngki-section-desc{color:var(--color-muted);margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7}
-
-/* CATEGORIES */
+/* categories */
 .ngki-cats{background:#fff}
 .ngki-cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .ngki-cat-card{position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/4;cursor:pointer}
@@ -113,8 +55,7 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-cat-count{font-size:12px;opacity:.8}
 .ngki-cat-cta{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:1px;transition:border-color .2s}
 .ngki-cat-card:hover .ngki-cat-cta{border-color:#fff}
-
-/* PRODUCTS */
+/* products */
 .ngki-products{background:var(--color-surface)}
 .ngki-products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .ngki-product-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-border);transition:box-shadow .25s,transform .25s;cursor:pointer}
@@ -122,7 +63,6 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-product-img{position:relative;aspect-ratio:1;overflow:hidden;background:var(--color-primary-tint)}
 .ngki-product-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
 .ngki-product-card:hover .ngki-product-img img{transform:scale(1.05)}
-.ngki-product-badge{position:absolute;top:12px;left:12px;background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:var(--radius-sm);letter-spacing:.04em}
 .ngki-product-body{padding:16px}
 .ngki-product-cat{font-size:11px;font-weight:700;color:var(--color-primary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
 .ngki-product-name{font-family:var(--font-heading);font-size:15px;font-weight:600;color:var(--color-dark);line-height:1.35;margin-bottom:8px;text-wrap:balance}
@@ -133,8 +73,7 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-btn-add{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:var(--color-primary);color:#fff;border-radius:var(--radius-md);font-size:12px;font-weight:700;border:none;cursor:pointer;transition:background .18s;white-space:nowrap;font-family:var(--font-body)}
 .ngki-btn-add:hover{background:var(--color-primary-dark);color:#fff}
 .ngki-products-more{text-align:center;margin-top:44px}
-
-/* WHY US */
+/* why us */
 .ngki-why{background:#fff}
 .ngki-why-inner{display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:center}
 .ngki-why-image{position:relative}
@@ -149,8 +88,7 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-why-icon svg{width:24px;height:24px}
 .ngki-why-item-title{font-family:var(--font-heading);font-size:16px;font-weight:600;color:var(--color-dark);margin-bottom:5px}
 .ngki-why-item-desc{font-size:14px;color:var(--color-muted);line-height:1.65}
-
-/* TESTIMONIALS */
+/* testimonials */
 .ngki-testi{background:var(--color-primary-tint)}
 .ngki-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .ngki-testi-card{background:#fff;border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-low);border:1px solid var(--color-border)}
@@ -160,8 +98,7 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-testi-avatar{width:44px;height:44px;border-radius:50%;background:var(--color-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:16px;font-weight:600}
 .ngki-testi-name{font-size:14px;font-weight:700;color:var(--color-dark);margin-bottom:2px}
 .ngki-testi-prod{font-size:12px;color:var(--color-primary)}
-
-/* CTA BANNER */
+/* cta */
 .ngki-cta{background:var(--color-primary);color:#fff;text-align:center;padding:72px 32px}
 .ngki-cta .ngki-label{color:rgba(255,255,255,.7)}
 .ngki-cta .ngki-section-title{color:#fff}
@@ -171,27 +108,9 @@ body.admin-bar .ngki-header{top:32px}
 .ngki-btn-white:hover{background:rgba(255,255,255,.9);color:var(--color-primary)}
 .ngki-btn-outline-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
 .ngki-btn-outline-white:hover{border-color:#fff;background:rgba(255,255,255,.08);color:#fff}
-
-/* FOOTER */
-.ngki-footer{background:var(--color-dark);color:rgba(255,255,255,.75);padding:64px 0 0}
-.ngki-footer-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:2.5fr 1fr 1fr 1.5fr;gap:48px}
-.ngki-footer-brand .logo-text{font-family:var(--font-heading);font-size:20px;font-weight:600;color:#fff;margin-bottom:14px}
-.ngki-footer-brand p{font-size:13px;line-height:1.7;max-width:280px}
-.ngki-footer-social{margin-top:20px;display:flex;gap:10px}
-.ngki-footer-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.75);transition:background .18s,color .18s}
-.ngki-footer-social a:hover{background:var(--color-primary);color:#fff}
-.ngki-footer-col h4{font-family:var(--font-heading);font-size:15px;font-weight:600;color:#fff;margin-bottom:18px}
-.ngki-footer-col ul{display:flex;flex-direction:column;gap:9px}
-.ngki-footer-col a{font-size:13px;transition:color .18s}
-.ngki-footer-col a:hover{color:#fff}
-.ngki-footer-contact li{font-size:13px;display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
-.ngki-footer-contact li svg{min-width:16px;margin-top:2px;color:var(--color-primary)}
-.ngki-footer-bottom{max-width:1280px;margin:48px auto 0;padding:20px 32px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12px}
-.ngki-footer-bottom p{opacity:.5}
-
-/* RESPONSIVE */
+/* responsive */
 @media(max-width:1024px){
-  .ngki-hero-inner{grid-template-columns:1fr;height:auto;min-height:auto}
+  .ngki-hero-inner{grid-template-columns:1fr;height:auto}
   .ngki-hero-content{padding:48px 0 32px}
   .ngki-hero-images{height:380px}
   .ngki-hero-img-grid{padding:0;height:380px}
@@ -200,69 +119,17 @@ body.admin-bar .ngki-header{top:32px}
   .ngki-products-grid{grid-template-columns:repeat(2,1fr)}
   .ngki-why-inner{grid-template-columns:1fr;gap:40px}
   .ngki-why-badge{right:0}
-  .ngki-footer-inner{grid-template-columns:1fr 1fr;gap:32px}
-  .ngki-footer-brand{grid-column:1/-1}
 }
 @media(max-width:768px){
   .ngki-section{padding:56px 0}
-  .ngki-inner,.ngki-header-inner,.ngki-hero-inner{padding:0 20px}
+  .ngki-hero-inner{padding:0 20px}
   .ngki-hero-title{font-size:28px}
   .ngki-cat-grid{grid-template-columns:repeat(2,1fr)}
   .ngki-cat-grid .ngki-cat-card:nth-child(3),.ngki-cat-grid .ngki-cat-card:nth-child(4),.ngki-cat-grid .ngki-cat-card:nth-child(5){display:none}
   .ngki-products-grid{grid-template-columns:repeat(2,1fr);gap:12px}
   .ngki-testi-grid{grid-template-columns:1fr}
-  .ngki-nav{display:none}
-  .ngki-footer-inner{grid-template-columns:1fr;gap:28px}
-  .ngki-footer-inner .ngki-footer-col:last-child{display:none}
 }
 </style>
-</head>
-<body <?php body_class( 'ngki-fp' ); ?>>
-<?php wp_body_open(); ?>
-
-<!-- TOP BAR -->
-<div class="ngki-topbar">
-  Miễn phí vận chuyển nội thành TP.HCM - Đơn hàng từ 500.000đ
-</div>
-
-<!-- HEADER -->
-<header class="ngki-header">
-  <div class="ngki-header-inner">
-    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ngki-logo">
-      <?php if ( $logo_url ) : ?>
-        <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-      <?php else : ?>
-        <span class="logo-text"><?php bloginfo( 'name' ); ?></span>
-      <?php endif; ?>
-    </a>
-    <nav class="ngki-nav">
-      <ul>
-        <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang chủ</a></li>
-        <li><a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>">Shop</a></li>
-        <?php
-        $cats_nav = get_terms( [ 'taxonomy' => 'product_cat', 'hide_empty' => true, 'exclude' => [ absint( get_option( 'default_product_cat' ) ) ], 'number' => 5 ] );
-        foreach ( (array) $cats_nav as $cat ) :
-        ?>
-        <li><a href="<?php echo esc_url( get_term_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a></li>
-        <?php endforeach; ?>
-        <li><a href="<?php echo esc_url( get_permalink( get_page_by_path( 'about-us' ) ) ); ?>">Về chúng tôi</a></li>
-        <li><a href="<?php echo esc_url( get_permalink( get_page_by_path( 'contact-us' ) ) ); ?>">Liên hệ</a></li>
-      </ul>
-    </nav>
-    <div class="ngki-header-actions">
-      <a href="<?php echo esc_url( get_search_link() ); ?>" title="Tìm kiếm">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </a>
-      <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" title="Tài khoản">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </a>
-      <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="ngki-btn-add ngki-btn-cart">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        Giỏ hàng<?php $count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; if ( $count ) echo ' (' . $count . ')'; ?>
-      </a>
-    </div>
-  </div>
-</header>
 
 <!-- HERO -->
 <section class="ngki-hero">
@@ -331,13 +198,9 @@ body.admin-bar .ngki-header{top:32px}
     </div>
     <div class="ngki-products-grid">
       <?php foreach ( $raw_products as $product ) :
-        $img_url  = get_the_post_thumbnail_url( $product->get_id(), 'woocommerce_single' );
-        $cats_str = '';
-        $p_cats   = get_the_terms( $product->get_id(), 'product_cat' );
-        if ( $p_cats ) {
-          $cats_str = implode( ', ', array_column( (array) $p_cats, 'name' ) );
-        }
-        $price_html = $product->get_price_html();
+        $img_url    = get_the_post_thumbnail_url( $product->get_id(), 'woocommerce_single' );
+        $p_cats     = get_the_terms( $product->get_id(), 'product_cat' );
+        $cats_str   = $p_cats ? implode( ', ', array_column( (array) $p_cats, 'name' ) ) : '';
         $is_variable = $product->is_type( 'variable' );
       ?>
       <div class="ngki-product-card">
@@ -474,65 +337,4 @@ body.admin-bar .ngki-header{top:32px}
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer class="ngki-footer">
-  <div class="ngki-footer-inner">
-    <div class="ngki-footer-brand">
-      <div class="logo-text"><?php bloginfo( 'name' ); ?></div>
-      <p>Thương hiệu hương thơm Việt Nam - Mỗi ngọn nến, mỗi chai tinh dầu mang một câu chuyện riêng dành cho bạn. Được làm từ sáp tự nhiên, tinh dầu Mỹ cao cấp.</p>
-      <div class="ngki-footer-social">
-        <a href="https://facebook.com/nghikigai" aria-label="Facebook" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://instagram.com/nghikigai" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://tiktok.com/@nghikigai" aria-label="TikTok" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.78a4.85 4.85 0 0 1-1.01-.09z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="ngki-footer-col">
-      <h4>Sản phẩm</h4>
-      <ul>
-        <?php foreach ( (array) $cats as $c ) : ?>
-        <li><a href="<?php echo esc_url( get_term_link( $c ) ); ?>"><?php echo esc_html( $c->name ); ?></a></li>
-        <?php endforeach; ?>
-      </ul>
-    </div>
-    <div class="ngki-footer-col">
-      <h4>Hỗ trợ</h4>
-      <ul>
-        <li><a href="<?php echo esc_url( get_permalink( get_page_by_path( 'about-us' ) ) ); ?>">Về chúng tôi</a></li>
-        <li><a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>">Chính sách vận chuyển</a></li>
-        <li><a href="<?php echo esc_url( get_permalink( get_page_by_path( 'faqs' ) ) ); ?>">Câu hỏi thường gặp</a></li>
-        <li><a href="<?php echo esc_url( get_permalink( get_page_by_path( 'contact-us' ) ) ); ?>">Liên hệ</a></li>
-      </ul>
-    </div>
-    <div class="ngki-footer-col ngki-footer-contact">
-      <h4>Liên hệ</h4>
-      <ul>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Hẻm 341 Nguyễn Trãi, P. Nguyễn Cư Trinh, Q.1, TP.HCM
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18l3-.01a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.28-1.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:0983797186">0983 797 186</a>
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          T2 - T7: 9:00 - 20:00
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="ngki-footer-bottom">
-    <p>© <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. Tất cả quyền được bảo lưu.</p>
-    <p>Thiết kế bởi Digito Combat</p>
-  </div>
-</footer>
-
-<?php wp_footer(); ?>
-</body>
-</html>
+<?php get_footer(); ?>
